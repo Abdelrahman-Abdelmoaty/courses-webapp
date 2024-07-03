@@ -10,6 +10,7 @@ $initiallyExpandedModuleId = $module->id ?? null;
             <span class="rounded-full size-8 grid text-lg bg-text text-primary font-bold place-items-center"
                 :class="{ 'bg-text/60': {{ $module->id }} != {{ $mod->id}}}">{{
                 $loop->iteration }}</span>
+
             <span class="font-bold tracking-wide uppercase">{{ $mod->title }}</span>
         </button>
 
