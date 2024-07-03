@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply min-h-screen bg-primary text-text relative antialiased [font-family:"Inter",sans-serif];
+}
