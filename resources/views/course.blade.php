@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-course-layout>
     <div class="grid md:grid-cols-5 gap-10 py-6">
         <div class="col-span-3 flex flex-col gap-4">
 
@@ -8,10 +8,7 @@
                 <span class="font-medium text-sm text-text/80">{{ $video->title }}</span>
             </div>
 
-            <iframe class="w-full rounded-xl aspect-video bg-neutral-700"
-                src="{{ $course->modules[0]->videos[0]->url }}" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
+            <div class="aspect-video bg-gray-800 rounded-xl"></div>
 
             <div>
                 <p class="font-semibold text-2xl">
@@ -29,11 +26,11 @@
                     <div class="mb-5 flex">
                         <button
                             class="my-2 block w-48 transition pb-3.5 pt-4 text-xl text-text/50 hover:text-text hover:font-bold"
-                            :class="{ 'font-bold border-b-2 text-text': tab == 'overview' }"
+                            :class="{ 'font-bold border-b-2 !text-text': tab == 'overview' }"
                             @click.prevent="tab = 'overview'">Overview</button>
                         <button
                             class="my-2 block w-48 transition pb-3.5 pt-4 text-xl text-text/50 hover:text-text hover:font-bold"
-                            :class="{ 'font-bold border-b-2 text-text': tab == 'transcripts' }"
+                            :class="{ 'font-bold border-b-2 !text-text': tab == 'transcripts' }"
                             @click.prevent="tab = 'transcripts'">Transcripts</button>
                     </div>
                 </div>
@@ -118,4 +115,4 @@
             @include('course.partials.sidebar')
         </div>
     </div>
-</x-app-layout>
+</x-course-layout>

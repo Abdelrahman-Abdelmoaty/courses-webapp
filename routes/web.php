@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CourseController::class, 'courses'])->name('home');
 
+
+Route::get('/course', function () {
+        return view('course-mock');
+    })->middleware(['auth', 'verified'])->name('course');
+
+
 Route::get('/course/{course}', [CourseController::class, 'course'])->middleware(['auth', 'verified'])->name('course');
 
 Route::get('/course/{course}/module/{module}/video/{video}', [CourseController::class, 'course'])->middleware(['auth', 'verified'])->name('course');

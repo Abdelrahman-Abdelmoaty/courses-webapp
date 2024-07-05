@@ -20,14 +20,15 @@
 </head>
 
 <body>
+    @include('course.partials.header')
+
     <!-- Page Heading -->
     @isset($header)
-        <header class="shadow">
-            <div class="container py-6 flex items-start justify-between">
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 {{ $header }}
             </div>
         </header>
-        <hr class="border-b border-gray-800" />
     @endisset
 
     <!-- Page Content -->
