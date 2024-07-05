@@ -1,142 +1,39 @@
-@php
-    $closeOtherChapters = 0;
-    $activeChapter = 1;
-    $activeModule = 'video';
-    $course = (object) [
-        'chapters' => [
-            (object) [
-                'id' => 1,
-                'title' => 'Good Planning',
-                'modules' => (object) [
-                    'video' => (object) [
-                        'id' => 1,
-                        'title' => 'Intro Video',
-                        'description' => 'Description 1',
-                        'subtitles' => [
-                            (object) [
-                                'id' => 1,
-                                'title' => 'Subtitle 1',
-                                'content' => 'Subtitle content 1',
-                                'isDone' => true,
-                            ],
-                            (object) [
-                                'id' => 2,
-                                'title' => 'Subtitle 2',
-                                'content' => 'Subtitle content 2',
-                                'isDone' => false,
-                            ],
-                        ],
-                    ],
-                    'excercise' => (object) [
-                        'id' => 2,
-                        'title' => 'Excercise',
-                    ],
-                    'assignment' => (object) [
-                        'id' => 3,
-                        'title' => 'Assignment',
-                    ],
-                    'quiz' => (object) [
-                        'id' => 3,
-                        'title' => 'Quiz',
-                    ],
-                ],
-                'isLocked' => false,
-            ],
-            (object) [
-                'id' => 2,
-                'title' => 'Creating a Plan',
-                'modules' => (object) [
-                    'video' => (object) [
-                        'id' => 1,
-                        'title' => 'Intro Video',
-                        'description' => 'Description 1',
-                        'subtitles' => [
-                            (object) [
-                                'id' => 1,
-                                'title' => 'Subtitle 1',
-                                'content' => 'Subtitle content 1',
-                                'isDone' => true,
-                            ],
-                            (object) [
-                                'id' => 2,
-                                'title' => 'Subtitle 2',
-                                'content' => 'Subtitle content 2',
-                                'isDone' => false,
-                            ],
-                        ],
-                    ],
-                    'excercise' => (object) [
-                        'id' => 2,
-                        'title' => 'Excercise',
-                    ],
-                    'assignment' => (object) [
-                        'id' => 3,
-                        'title' => 'Assignment',
-                    ],
-                    'quiz' => (object) [
-                        'id' => 3,
-                        'title' => 'Quiz',
-                    ],
-                ],
-                'isLocked' => false,
-            ],
-            (object) [
-                'id' => 3,
-                'title' => 'Executing the Plan',
-                'modules' => (object) [
-                    'video' => (object) [
-                        'id' => 1,
-                        'title' => 'Intro Video',
-                        'description' => 'Description 1',
-                        'subtitles' => [
-                            (object) [
-                                'id' => 1,
-                                'title' => 'Subtitle 1',
-                                'content' => 'Subtitle content 1',
-                                'isDone' => true,
-                            ],
-                            (object) [
-                                'id' => 2,
-                                'title' => 'Subtitle 2',
-                                'content' => 'Subtitle content 2',
-                                'isDone' => false,
-                            ],
-                        ],
-                    ],
-                    'excercise' => (object) [
-                        'id' => 2,
-                        'title' => 'Excercise',
-                    ],
-                    'assignment' => (object) [
-                        'id' => 3,
-                        'title' => 'Assignment',
-                    ],
-                    'quiz' => (object) [
-                        'id' => 3,
-                        'title' => 'Quiz',
-                    ],
-                ],
-                'isLocked' => true,
-            ],
-        ],
-    ];
-@endphp
-
-
+<div class="flex justify-end gap-3 mb-4">
+    <button class="rounded-full p-4 bg-secondary dark:bg-secondary-dark hover:opacity-85 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-calendar-clock">
+            <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5" />
+            <path d="M16 2v4" />
+            <path d="M8 2v4" />
+            <path d="M3 10h5" />
+            <path d="M17.5 17.5 16 16.3V14" />
+            <circle cx="16" cy="16" r="6" />
+        </svg>
+    </button>
+    <button class="rounded-full p-4 bg-secondary dark:bg-secondary-dark hover:opacity-85 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-search">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+        </svg>
+    </button>
+</div>
 
 
 <div class="lg:col-span-2 flex flex-col gap-4 max-lg:w-full" x-data="{
     activeChap: {{ $activeChapter }},
     activeMod: '{{ $activeModule }}',
-    currentExpandedModule: '1-{{ $activeChapter }}',
-    closeOther: {{ $closeOtherChapters }},
+    selectedChap: {{ $activeChapter }},
+    activeVid: {{ $activeVideo }},
+    closeOther: {{ $closeOtherChapters ? 'true' : 'false' }},
 }">
-
     @foreach ($course->chapters as $chapter)
-        <div class="flex flex-col rounded-xl bg-secondary dark:bg-secondary-dark" x-data="{ expanded: currentExpandedModule == '{{ $loop->iteration }}-{{ $chapter->id }}' }">
+        <div class="flex flex-col rounded-xl bg-secondary dark:bg-secondary-dark" x-data="{ expanded: activeChap == {{ $chapter->id }} }">
 
-            <button class="flex items-center gap-3 p-6"
-                @click="expanded = !expanded; currentExpandedModule = '{{ $loop->iteration }}-{{ $chapter->id }}';">
+
+            <button class="flex items-center gap-3 p-6" @click="expanded = !expanded; selectedChap={{ $chapter->id }}">
                 <span
                     class="rounded-full size-8 grid text-lg uppercase bg-secondary-dark dark:bg-secondary text-primary dark:text-primary-dark font-bold place-items-center"
                     :class="{
@@ -144,9 +41,12 @@
                     }">{{ $loop->iteration }}</span>
 
                 <span class="font-extrabold tracking-wide uppercase"
-                    :class="{ 'text-secondary-dark/60 dark:text-secondary/60': activeChap != {{ $chapter->id }} }">{{ $chapter->title }}</span>
+                    :class="{ 'text-secondary-dark/60 dark:text-secondary/60': activeChap != {{ $chapter->id }} }">
+                    {{ $chapter->title }}
+                </span>
+
                 @if ($chapter->isLocked)
-                    <span class="ml-auto text-secondary-dark/60 dark:text-secondary/60'">
+                    <span class="ml-auto text-secondary-dark/60 dark:text-secondary/60">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-lock">
@@ -155,7 +55,8 @@
                         </svg>
                     </span>
                 @else
-                    <span class="ml-auto">
+                    <span class="ml-auto transition"
+                        :class="{ 'transform -rotate-180': selectedChap == {{ $chapter->id }} }">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="lucide lucide-chevron-down">
@@ -167,10 +68,8 @@
 
 
             @if (!$chapter->isLocked)
-                <div class="flex flex-col"
-                    x-show="expanded && (!closeOther || currentExpandedModule == '{{ $loop->iteration }}-{{ $chapter->id }}')"
+                <div class="flex flex-col" x-show="closeOther? selectedChap=={{ $chapter->id }} : expanded"
                     x-collapse>
-
                     <button
                         class="flex gap-3 py-4 pl-7 border-l-4 border-l-transparent transition hover:opacity-85 cursor-pointer last:mb-6"
                         :class="{
@@ -188,9 +87,14 @@
                         <div class="flex flex-col">
                             <span class="font-bold text-start mb-2">{{ $chapter->modules->video->title }}</span>
                             <div class="flex flex-col gap-1">
-                                @foreach ($chapter->modules->video->subtitles as $subtitle)
-                                    <div class="flex items-center gap-2">
-                                        @if ($subtitle->isDone)
+                                @foreach ($chapter->modules->video->videos as $video)
+                                    <a @click="activeVid = {{ $video->id }}"
+                                        class="flex items-center gap-2 text-secondary-dark/60 dark:text-secondary/60 hover:scale-110 transition"
+                                        :class="{
+                                            '!text-secondary-dark dark:!text-secondary': activeVid ==
+                                                {{ $video->id }} && activeChap == {{ $chapter->id }},
+                                        }">
+                                        @if ($video->isDone)
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -206,9 +110,9 @@
                                                 <circle cx="12" cy="12" r="10" />
                                             </svg>
                                         @endif
-                                        <span
-                                            class="text-secondary-dark/80 dark:text-secondary/80 font-medium line-clamp-1">{{ $subtitle->title }}</span>
-                                    </div>
+                                        <span class="font-bold line-clamp-1">
+                                            {{ $video->title }}</span>
+                                    </a>
                                 @endforeach
                             </div>
                         </div>
@@ -222,9 +126,9 @@
                         }"
                         @click="activeChap = {{ $chapter->id }}; activeMod = 'excercise'">
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-sticky-note">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sticky-note">
                                 <path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8Z" />
                                 <path d="M15 3v4a2 2 0 0 0 2 2h4" />
                             </svg>
@@ -240,9 +144,9 @@
                         }"
                         @click="activeChap = {{ $chapter->id }}; activeMod = 'assignment'">
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-book-open-check">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check">
                                 <path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z" />
                                 <path d="m16 12 2 2 4-4" />
                                 <path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3" />
