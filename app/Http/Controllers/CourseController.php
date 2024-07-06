@@ -4,34 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 
-
 class CourseController extends Controller
 {
-    public function courses()
+    public function index()
     {
         $courses = Course::all();
-
         return view('home', compact('courses'));
     }
 
-    public function course($courseId, $moduleId = null, $videoId = null)
+    public function course($courseSlug, $chapterId = null, $moduleId = null, $videoId = null)
     {
-        $course = Course::find($courseId);
-        $module;
-        if($moduleId){
-            $module = $course->modules->find($moduleId);
+        $course = Course::where('slug', $courseSlug)->first();
+        $activeChapter = null;
+        if ($chapterId) {
+            $activeChapter = $course->chapters->where('id', $chapterId)->first();
         } else {
-            $module = $course->modules->first();
-        }
-        $video;
-        if($videoId){
-            $video = $module->videos->find($videoId);
-        } else {
-            $video = $module->videos->first();
+            $activeChapter = $course->chapters->first();
         }
 
-        return view('course', compact('course', 'module', 'video'));
+        $activeModule = null;
+        if ($moduleId) {
+            $activeModule = $activeChapter->modules->where('id', $moduleId)->first();
+        } else {
+            $activeModule = $activeChapter->modules->where('type', 'lesson')->first();
+        }
+
+        $activeVideo = null;
+        if ($videoId) {
+            $activeVideo = $activeModule->videos->where('id', $videoId)->first();
+        } else {
+            if ($activeModule->type == 'lesson') {
+                $activeVideo = $activeModule->videos->first();
+            }
+        }
+
+        return view('course', compact('course', 'activeChapter', 'activeModule', 'activeVideo'));
     }
-
-
 }

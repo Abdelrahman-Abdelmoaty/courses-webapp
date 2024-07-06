@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Exercise extends Model
 {
-    protected $fillable = ['title', 'description', 'is_done', 'module_id'];
+    protected $fillable = ['title', 'module_id'];
 
     public function module()
     {

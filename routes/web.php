@@ -4,21 +4,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [CourseController::class, 'courses'])->name('home');
+Route::get('/', [CourseController::class, 'index'])->name('home');
 
+Route::get('/course/{courseSlug}', [CourseController::class, 'course'])->name('course');
+Route::get('/course/{courseSlug}/chapter/{chapterId}/module/{moduleId}', [CourseController::class, 'course'])->name('course.module');
+Route::get('/course/{courseSlug}/chapter/{chapterId}/module/{moduleId}/video/{videoId}', [CourseController::class, 'course'])->name('course.video');
 
-Route::get('/course', function () {
-        return view('course-mock');
-    })->middleware(['auth', 'verified'])->name('course');
-
-
-Route::get('/course/{course}', [CourseController::class, 'course'])->middleware(['auth', 'verified'])->name('course');
-
-Route::get('/course/{course}/module/{module}/video/{video}', [CourseController::class, 'course'])->middleware(['auth', 'verified'])->name('course');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Course extends Model
 {
-    use HasFactory;
+    protected $fillable = ['slug', 'title'];
 
-    protected $fillable = ['title', 'description'];
-
-    public function modules()
+    public function setTitleAttribute($value)
     {
-        return $this->hasMany(Module::class);
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
     }
 }

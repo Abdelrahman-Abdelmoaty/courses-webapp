@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('url');
-            $table->integer('duration'); 
+            $table->boolean('is_done')->default(false);
             $table->timestamps();
         });
+
     }
 
     /**

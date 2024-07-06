@@ -20,7 +20,6 @@
 </head>
 
 <body>
-    @include('layouts.header')
 
     <!-- Page Content -->
     <main class="container">

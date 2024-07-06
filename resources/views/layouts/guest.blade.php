@@ -19,16 +19,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <!-- Page Heading -->
-    @isset($header)
-        <header class="shadow">
-            <div class="container py-6 flex items-start justify-between">
-                {{ $header }}
-            </div>
-        </header>
-        <hr class="border-b border-gray-800" />
-    @endisset
+<body class="!text-black">
 
     <!-- Page Content -->
     <main class="container">
