@@ -12,32 +12,26 @@ class CourseController extends Controller
         return view('home', compact('courses'));
     }
 
-    public function course($courseSlug, $chapterId = null, $moduleId = null, $videoId = null)
+    public function course($courseId, $episodeId = null)
     {
-        $course = Course::where('slug', $courseSlug)->first();
-        $activeChapter = null;
-        if ($chapterId) {
-            $activeChapter = $course->chapters->where('id', $chapterId)->first();
-        } else {
-            $activeChapter = $course->chapters->first();
-        }
+        $course = Course::where('id', $courseId)->first();
 
-        $activeModule = null;
-        if ($moduleId) {
-            $activeModule = $activeChapter->modules->where('id', $moduleId)->first();
-        } else {
-            $activeModule = $activeChapter->modules->where('type', 'lesson')->first();
-        }
+        $chapter = null;
+        $episode = null;
 
-        $activeVideo = null;
-        if ($videoId) {
-            $activeVideo = $activeModule->videos->where('id', $videoId)->first();
-        } else {
-            if ($activeModule->type == 'lesson') {
-                $activeVideo = $activeModule->videos->first();
-            }
-        }
+        if ($episodeId) {
+            $chapter = $course->chapters->first(function ($chapter) use ($episodeId) {
+                return $chapter->episodes->contains('id', $episodeId);
+            });
 
-        return view('course', compact('course', 'activeChapter', 'activeModule', 'activeVideo'));
+            $episode = $chapter->episodes->first(function ($episode) use ($episodeId) {
+                return $episode->id == $episodeId;
+            });
+        } else {
+            $chapter = $course->chapters->first();
+            $episode = $chapter->episodes->first();
+        }
+       
+        return view('course', compact('course', 'chapter', 'episode'));
     }
 }

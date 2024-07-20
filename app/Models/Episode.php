@@ -1,12 +1,13 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class Course extends Model
+class Episode extends Model
 {
     use HasFactory, HasUuids;
 
@@ -14,10 +15,10 @@ class Course extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['name', 'description', 'canonical'];
+    protected $fillable = ['chapter_id', 'name', 'description', 'url', 'duration', 'canonical'];
 
-    public function chapters()
+    public function chapter()
     {
-        return $this->hasMany(Chapter::class);
+        return $this->belongsTo(Chapter::class);
     }
 }

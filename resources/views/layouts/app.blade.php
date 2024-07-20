@@ -25,6 +25,8 @@
     <main class="container">
         {{ $slot }}
     </main>
+
+   
 </body>
 
 </html>

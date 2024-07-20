@@ -21,11 +21,13 @@
 
 <body>
     @include('course.partials.header')
+    {{-- @include('course.partials.loading') --}}
 
     <!-- Page Content -->
     <main class="container">
         {{ $slot }}
     </main>
+    
 </body>
 
 </html>

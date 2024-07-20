@@ -3,9 +3,11 @@
         This should be the landing page
     </p>
 
-    @foreach ($courses as $course)
-        <a href="/course/{{ $course->slug }}" class="p-12 font-bold text-red-500">
-            {{ $course->title }}
-        </a>
-    @endforeach
+    <div class="flex flex-col gap-2">
+        @foreach ($courses as $course)
+            <a href="/course/{{ $course->id }}" class="p-2 font-bold text-red-500">
+                {{ $course->name }}
+            </a>
+        @endforeach
+    </div>
 </x-app-layout>
