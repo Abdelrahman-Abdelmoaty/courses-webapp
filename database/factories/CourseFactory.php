@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Course;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CourseFactory extends Factory
 {
@@ -12,7 +12,7 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'id' => $this->faker->uuid(),
+            'uuid' => $this->faker->uuid(),
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->paragraph(),
             'canonical' => $this->faker->unique()->slug(),

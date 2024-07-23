@@ -94,8 +94,8 @@
                                     '!border-l-primary-dark dark:!border-l-primary bg-gray-200 dark:bg-gray-800': episodeId ==
                                         `{{ $chapterEpisode->id }}`,
                                 }"
-                                {{-- @click="window.location.href = `/course/{{ $course->id }}/episode/{{ $chapterEpisode->id }}`" --}}
-                                @click="episodeId = '{{ $chapterEpisode->id }}'; chapterId = '{{ $courseChapter->id }}'; activeEpisode = {{ json_encode($chapterEpisode) }}; activeChapter = {{ json_encode($courseChapter) }}; history.pushState({}, '', `/course/{{ $course->id }}/episode/{{ $chapterEpisode->id }}`)">
+                                {{-- @click="window.location.href = `/episode/{{ $course->id }}/episode/{{ $chapterEpisode->id }}`" --}}
+                                @click="episodeId = '{{ $chapterEpisode->id }}'; chapterId = '{{ $courseChapter->id }}'; activeEpisode = {{ json_encode($chapterEpisode) }}; activeChapter = {{ json_encode($courseChapter) }}; history.pushState({}, '', `/episode/{{ $course->id }}/episode/{{ $chapterEpisode->id }}`)">
 
                                 <svg :class="{
                                             'hidden': `{{ $chapterEpisode->id }}` != episodeId,
@@ -159,7 +159,7 @@
                             <span class="font-bold text-start">{{ $episode->name }}</span>
                             <div class="flex flex-col gap-2">
                                 @foreach ($episode->videos as $video)
-                                    <a href="/course/{{ $course->slug }}/chapter/{{ $chapter->id }}/episode/{{ $episode->id }}/video/{{ $video->id }}"
+                                    <a href="/episode/{{ $course->slug }}/chapter/{{ $chapter->id }}/episode/{{ $episode->id }}/episode/{{ $video->id }}"
                                         class="flex items-center gap-2 transition text-secondary-dark/60 dark:text-secondary/60 hover:scale-110 first:mt-2"
                                         :class="{
                                             '!text-secondary-dark dark:!text-secondary': activeVid ==

@@ -4,10 +4,13 @@
     </p>
 
     <div class="flex flex-col gap-2">
-        @foreach ($courses as $course)
-            <a href="/course/{{ $course->id }}" class="p-2 font-bold text-red-500">
-                {{ $course->name }}
+        @foreach ($course->chapters as $chapter)
+            <span class="font-bold">Chapter: {{ $chapter->name }}</span>
+            @foreach ($chapter->episodes as $episode)
+            <a href="/episode/{{ $episode->uuid }}" class="p-2 font-bold text-red-500">
+                {{ $episode->name }}
             </a>
+            @endforeach
         @endforeach
     </div>
 </x-app-layout>
