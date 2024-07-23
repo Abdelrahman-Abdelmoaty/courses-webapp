@@ -17,6 +17,7 @@ class CreateEpisodesTable extends Migration
             $table->string('url');
             $table->integer('duration');
             $table->string('canonical')->unique();
+            $table->boolean('is_seen')->default(false);
             $table->timestamps();
         });
     }

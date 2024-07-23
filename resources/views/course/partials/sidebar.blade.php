@@ -41,6 +41,7 @@
             chapterId: '{{ $chapter->id }}',
             episodeId: '{{ $episode->id }}',
             chap: '{{ $chapter->id }}',
+            closeOtherChapters: '{{ $collapse_chapters }}'
         }">
 
             @foreach ($course->chapters as $courseChapter)
@@ -94,99 +95,29 @@
                                     '!border-l-primary-dark dark:!border-l-primary bg-gray-200 dark:bg-gray-800': episodeId ==
                                         `{{ $chapterEpisode->id }}`,
                                 }"
-                                {{-- @click="window.location.href = `/episode/{{ $course->id }}/episode/{{ $chapterEpisode->id }}`" --}}
-                                @click="episodeId = '{{ $chapterEpisode->id }}'; chapterId = '{{ $courseChapter->id }}'; activeEpisode = {{ json_encode($chapterEpisode) }}; activeChapter = {{ json_encode($courseChapter) }}; history.pushState({}, '', `/episode/{{ $course->id }}/episode/{{ $chapterEpisode->id }}`)">
+                                @click="episodeId = '{{ $chapterEpisode->id }}'; chapterId = '{{ $courseChapter->id }}'; activeEpisode = {{ json_encode($chapterEpisode) }}; activeChapter = {{ json_encode($courseChapter) }}; history.pushState({}, '', `/episode/{{ $chapterEpisode->uuid }}`)">
 
                                 <svg :class="{
-                                            'hidden': `{{ $chapterEpisode->id }}` != episodeId,
-                                        }" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
+                                    'hidden': {{ $chapterEpisode->is_seen }},
+                                }"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-play">
                                     <polygon points="6 3 20 12 6 21 6 3" />
                                 </svg>
-                                
+
                                 <svg :class="{
-                                        'hidden': `{{ $chapterEpisode->id }}` == episodeId,
-                                    }" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-panel-left-close">
-                                    <rect width="18" height="18" x="3" y="3" rx="2" />
-                                    <path d="M9 3v18" />
-                                    <path d="m16 15-3-3 3-3" />
+                                    'hidden': !{{ $chapterEpisode->is_seen }},
+                                }"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-check-big">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <path d="m9 11 3 3L22 4" />
                                 </svg>
+
 
                                 <span class="font-bold text-start">{{ $chapterEpisode->name }}</span>
-
-
-
-                                {{-- <div>
-                            @if ($episode->type == 'lesson')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
-                                    <polygon points="6 3 20 12 6 21 6 3" />
-                                </svg>
-                            @elseif($episode->type == 'quiz')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard">
-                                    <path
-                                        d="M18 2h-3a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2H4a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" />
-                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-                                </svg>
-                            @elseif($episode->type == 'assignment')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
-                                    <path d="M14 3v5h5M16 13H8M16 17H8M10 9H8" />
-                                </svg>
-                            @elseif($episode->type == 'exercise')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-file-text">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
-                                    <path d="M14 3v5h5M16 13H8M16 17H8M10 9H8" />
-                                </svg>
-                            @endif
-
-
-                        </div> --}}
-
-                                {{-- <div class="flex flex-col">
-                            <span class="font-bold text-start">{{ $episode->name }}</span>
-                            <div class="flex flex-col gap-2">
-                                @foreach ($episode->videos as $video)
-                                    <a href="/episode/{{ $course->slug }}/chapter/{{ $chapter->id }}/episode/{{ $episode->id }}/episode/{{ $video->id }}"
-                                        class="flex items-center gap-2 transition text-secondary-dark/60 dark:text-secondary/60 hover:scale-110 first:mt-2"
-                                        :class="{
-                                            '!text-secondary-dark dark:!text-secondary': activeVid ==
-                                                {{ $video->id }} && chapter == {{ $chapter->id }},
-                                        }">
-                                        @if ($video->isDone)
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-circle-check-big">
-                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                                <path d="m9 11 3 3L22 4" />
-                                            </svg>
-                                        @else
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-circle">
-                                                <circle cx="12" cy="12" r="10" />
-                                            </svg>
-                                        @endif
-                                        <span class="font-bold line-clamp-1">
-                                            {{ $video->title }}</span>
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div> --}}
                             </button>
                         </div>
                     @endforeach

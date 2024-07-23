@@ -11,12 +11,11 @@ class CourseController extends Controller
     {
         $course = Course::all()->first();
 
-        return view('home', ['course' => Course::all()->first()]);
+        return view('home', ['course' => $course]);
     }
 
     public function showEpisode(Episode $episode)
-    {
-        $episode = $episode;
+    {        
         $chapter = $episode->chapter;
         $course = $chapter->course;
 

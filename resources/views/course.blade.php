@@ -1,5 +1,4 @@
 <script>
-    const closeOtherChapters = true;
     const episodeHeaderVariant = 'default'; // default, no-icon, title-only
 </script>
 
@@ -9,7 +8,7 @@
         activeChapter: {{ json_encode($chapter) }},
     }">
         <div class="flex flex-col gap-4 lg:col-span-3">
-          
+
             <div class="flex flex-wrap items-center gap-4">
                 <div :class="{ 'hidden': episodeHeaderVariant === 'no-icon' || episodeHeaderVariant ===  'title-only' }">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
@@ -36,10 +35,11 @@
             </div>
 
             {{-- Vimeo Player --}}
-            <div class="aspect-video" style="position:relative;"><iframe
-                    src="https://player.vimeo.com/episode/978258437?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                    frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
-                    style="position:absolute;top:0;left:0;width:100%;height:100%;" title="test-video"></iframe>
+            <div class="aspect-video" style="position:relative;">
+                <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                    src='{{ $episode->url }}'
+                    width="640" height="360" frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="test-video"></iframe>
             </div>
             <script src="https://player.vimeo.com/api/player.js"></script>
 
