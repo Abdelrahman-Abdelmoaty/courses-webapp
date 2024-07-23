@@ -25,6 +25,7 @@ class CourseController extends Controller
                 'episode' => $episode,
                 'chapter' => $chapter,
                 'course' => $course,
+                'collapse_chapters' => true
             ]);
     }
 }
