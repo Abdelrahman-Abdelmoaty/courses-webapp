@@ -12,6 +12,10 @@ export default {
     ],
 
     theme: {
+        fontFamily: {
+            poppins: ["Poppins", ...defaultTheme.fontFamily.sans],
+            nunito: ["Nunito", ...defaultTheme.fontFamily.sans],
+        },
         container: {
             center: true,
             padding: "1rem",
