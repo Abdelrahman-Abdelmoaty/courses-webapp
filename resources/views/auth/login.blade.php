@@ -42,7 +42,7 @@
                             <span class="text-red-500" title="Required" aria-hidden="true">*</span></label>
                         <input
                             class="block w-full p-4 mt-1 text-sm border-gray-300 rounded-lg shadow-sm placeholder:text-gray-400"
-                            id="password" type="password" name="password" placeholder="Password" />
+                            id="password" type="password" name="password" placeholder="•••••••" />
                         @if ($errors->get('password'))
                             <div class="mt-2">
                                 <ul class="space-y-1 text-sm text-red-600">
